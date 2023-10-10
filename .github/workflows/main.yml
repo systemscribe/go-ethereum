@@ -4,19 +4,14 @@ on:
   pull_request:
     types:
       - closed
+      - labeled
 
 jobs:
   build-and-upload:
+    if: ${{ github.event.label.name == 'CI:TriggerBuild' }}
     runs-on: self-hosted
 
     steps:
-        - name: Check PR label
-          id: check_label
-          uses: actions/labeler@v2
-          with:
-            action: contains
-            label: CI:TriggerBuild
-
         - name: Tag with Branch
           id: image_tag
           run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
