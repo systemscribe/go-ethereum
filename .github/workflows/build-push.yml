@@ -37,3 +37,18 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.APP_NAME }}:latest
+
+  trigger-actions:
+    runs-on: self-hosted
+    needs: build-and-push
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: '${{ secrets.DOCKERHUB_USERNAME }}',
+              repo: 'go-ethereum',
+              workflow_id: 'provision.yml',
+              ref: 'main'
+            })
