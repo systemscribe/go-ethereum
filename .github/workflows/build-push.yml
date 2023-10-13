@@ -8,7 +8,7 @@ on:
       - labeled
 
 jobs:
-  build-and-upload:
+  build-and-push:
     if: ${{ github.event.label.name == 'CI:TriggerBuild' }}
     runs-on: self-hosted
 
