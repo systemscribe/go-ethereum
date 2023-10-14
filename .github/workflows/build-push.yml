@@ -10,7 +10,7 @@ on:
 jobs:
   import-build-push:
     if: ${{ github.event.label.name == 'CI:TriggerBuild' }}
-    uses: ${{ secrets.DOCKERHUB_USERNAME }}/ci-helpers/.github/workflows/build-push.yml@main
+    uses: systemscribe/ci-helpers/.github/workflows/build-push.yml@main
     with:
       app-name: "go-ethereum"
     secrets:
